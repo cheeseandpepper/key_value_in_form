@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :remove_details, :add_details]
 
   # GET /products
   # GET /products.json
@@ -71,7 +71,6 @@ class ProductsController < ApplicationController
   end
 
   def remove_details
-    #raise params.inspect
     respond_to do |format|
       format.js
     end

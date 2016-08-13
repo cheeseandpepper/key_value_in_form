@@ -7,13 +7,13 @@
       <%= text_field_tag "details[#{v.object_id}]", v, data: { field_type: 'value' } %>
     </div>
     <div class='three columns'>
-      <%= link_to "Remove", {}, class: "remove-details-row", remote: true %>
+      <%= link_to "X", remove_details_product_path(@product), class: "remove-details-row", remote: true %>
     </div>
   </div>
 </div>
 
 <script>
-  $('.remove-details-row').click(function() {
+  $('.remove-details-row').click(function(e) {
     $(this).closest('.row').remove()
   })
   
