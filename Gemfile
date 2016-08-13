@@ -10,6 +10,7 @@ gem 'jbuilder',       '~> 2.0'
 gem 'sdoc',           '~> 0.4.0',          group: :doc
 gem 'spring',                              group: :development
 gem 'pg',             '~> 0.18.4'
+gem 'rails_12factor',                      group: :production
 gem 'skeleton-rails', :git => 'https://github.com/helios-technologies/skeleton-rails'
 gem 'jquery-ui-rails'
 
