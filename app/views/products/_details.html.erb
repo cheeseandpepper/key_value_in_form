@@ -1,0 +1,53 @@
+<div class="field">
+  <div class='row'>
+    <div class='three columns'>
+      <%= text_field_tag "details[#{k.object_id}]", k, data: { field_type: 'key' } %>
+    </div>
+    <div class='three columns'>
+      <%= text_field_tag "details[#{v.object_id}]", v, data: { field_type: 'value' } %>
+    </div>
+    <div class='three columns'>
+      <%= link_to "Remove", {}, class: "remove-details-row", remote: true %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.remove-details-row').click(function() {
+    $(this).closest('.row').remove()
+  })
+  
+  var keySelectors = $('#details_area').find('[data-field-type="key"]');
+  var knownKeys    = <%= raw @known_keys %>;
+  
+  var checkForDuplicates = function() {
+    duplicateObject = {};
+    
+    for(i = 0; i < keySelectors.length; i++) {
+      
+      value                  = keySelectors[i].value;
+      duplicateObject[value] = duplicateObject[value] + 1 || 1;
+
+      if (duplicateObject[value] > 1) {
+        $('.duplicate-warning-area').append("<p>You have a duplicate key! Cannot save!</p>");
+        $("input[type=submit]").removeClass('button-primary').addClass('button');
+        $("input[type=submit]").attr('disabled','disabled');
+      } else {
+        $('.duplicate-warning-area').empty();
+        $("input[type=submit]").removeClass('button').addClass('button-primary');
+        $("input[type=submit]").removeAttr('disabled');
+      }
+    }
+  };
+
+  keySelectors.autocomplete({
+    source: knownKeys,
+    close: function() {
+      checkForDuplicates();
+    }
+  });
+
+  keySelectors.on('input propertychange paste', function() {
+    checkForDuplicates();
+  })
+</script>

@@ -20,5 +20,14 @@
   <%= @product.price %>
 </p>
 
+<p>
+  <strong>Details:</strong>
+  <ul>
+    <% JSON.parse(@product.details).each do |k, v| %>
+      <li> <%= "#{k}: #{v}" %> </li>
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

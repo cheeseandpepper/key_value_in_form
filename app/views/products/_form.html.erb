@@ -11,23 +11,58 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :sku %><br>
-    <%= f.text_field :sku %>
+  <div class='row'>
+    <div class='three columns'>
+      <div class="field">
+        <%= f.label :sku %>
+        <%= f.text_field :sku %>
+      </div>
+    </div>
+    <div class='three columns'>
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class='three columns'>
+      <div class="field">
+        <%= f.label :price %>
+        <%= f.text_field :price %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class='row'>
+    <div class='three columns'>
+      <div class="field">
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
+
+  
+  <% if @product.persisted? %>
+    <h2>Add details</h2>
+    <%= link_to "Add Details", add_details_product_path(@product.id), remote: true %>
+    <div id='details_area'>
+      <div class='row'>
+        <div class='three columns'>
+          <%= f.label :details, 'Key' %>
+        </div>
+        <div class='three columns'>
+          <%= f.label :details, 'Value' %>
+        </div>
+      </div>
+      <% JSON.parse(@product.details).each do |key, value| %>
+        <%= render partial: "details", locals: { k: key, v: value } %>
+      <% end %>
+    </div>
+  <% end %>
+  
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'button-primary' %>
+  </div>
+  <div class='duplicate-warning-area'>
+    
   </div>
 <% end %>
