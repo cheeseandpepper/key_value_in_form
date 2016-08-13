@@ -59,11 +59,11 @@ feature "Product" do
     inputs = page.find_by_id('details_area').all('input')
     inputs.each_slice(2).with_index do |(key, value), index|
       key.set(kv_hash[:keys][index])
-      key.trigger(:focus)
-      force_autocomplete_change(key[:id], kv_hash[:keys][index])
-      press_enter(key[:id])
+      #key.trigger(:focus)
+      #force_autocomplete_change(key[:id], kv_hash[:keys][index])
+      #press_enter(key[:id])
       value.set(kv_hash[:values][index])
-      force_autocomplete_change(value[:id], kv_hash[:values][index])
+      #force_autocomplete_change(value[:id], kv_hash[:values][index])
     end
     #page.save_screenshot('~/Desktop/screenshot.png')
   end
