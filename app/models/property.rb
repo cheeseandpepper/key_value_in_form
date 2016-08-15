@@ -3,6 +3,6 @@ class Property < ActiveRecord::Base
 
 
   def self.known_keys
-    all.flat_map { |record| record.data.keys.uniq }.compact
+    all.pluck(:name).uniq
   end
 end

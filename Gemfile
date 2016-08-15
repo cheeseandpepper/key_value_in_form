@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'cocoon'
 
 group :development, :test do
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'pry'
 end
 
@@ -30,4 +31,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'minitest-fail-fast'
+  gem 'simplecov', require: false
+  gem 'database_cleaner'
+  gem 'minitest-around'
 end
