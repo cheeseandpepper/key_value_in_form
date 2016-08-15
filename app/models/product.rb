@@ -1,16 +1,17 @@
 class Product < ActiveRecord::Base
-  after_save :ensure_details_keys_are_unique, if: Proc.new { |record| record.details.present? }
+  has_many :properties, dependent: :destroy
+  accepts_nested_attributes_for :properties, reject_if: :all_blank, allow_destroy: true
+  after_save :ensure_details_keys_are_unique, if: Proc.new { |record| record.properties.present? }
 
-  def self.known_keys
-    all.flat_map { |record| JSON.parse(record.details).keys }.compact
+  def unique_keys
+    properties.pluck(:name).uniq
   end
 
   def ensure_details_keys_are_unique
-    keys = JSON.parse(details).keys
-    if keys.uniq.count == keys.count
+    if unique_keys.count == properties.pluck(:name).count
       true
     else
-      errors.add(:details, 'must only contain unique keys!')
+      errors.add(:properties, 'must only contain unique keys!')
       false
     end
   end

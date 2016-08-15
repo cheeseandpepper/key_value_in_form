@@ -11,12 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811184125) do
+ActiveRecord::Schema.define(version: 20160815151724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-# Could not dump table "products" because of following StandardError
-#   Unknown type 'jsonb' for column 'details'
+  create_table "products", force: :cascade do |t|
+    t.string   "sku"
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.integer "product_id"
+    t.string  "name"
+    t.string  "value"
+  end
+
+  add_index "properties", ["name"], name: "index_properties_on_name", using: :btree
+  add_index "properties", ["value"], name: "index_properties_on_value", using: :btree
 
 end

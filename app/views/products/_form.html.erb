@@ -1,4 +1,5 @@
-<%= form_for(@product) do |f| %>
+<%= simple_form_for(@product) do |f| %>
+  <!-- TODO: Might not need this with simple form -->
   <% if @product.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
@@ -14,50 +15,37 @@
   <div class='row'>
     <div class='three columns'>
       <div class="field">
-        <%= f.label :sku %>
-        <%= f.text_field :sku %>
+        <%= f.input :sku %>
       </div>
     </div>
     <div class='three columns'>
       <div class="field">
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+        <%= f.input :name %>
       </div>
     </div>
     <div class='three columns'>
       <div class="field">
-        <%= f.label :price %>
-        <%= f.text_field :price %>
+        <%= f.input :price %>
       </div>
     </div>
   </div>
   <div class='row'>
     <div class='three columns'>
       <div class="field">
-        <%= f.label :description %>
-        <%= f.text_area :description %>
+        <%= f.input :description %>
       </div>
     </div>
   </div>
-
   
-  <% if @product.persisted? %>
-    <h2>Add details</h2>
-    <%= link_to "Add Details", add_details_product_path(@product.id), remote: true %>
-    <div id='details_area'>
-      <div class='row'>
-        <div class='three columns'>
-          <%= f.label :details, 'Key' %>
-        </div>
-        <div class='three columns'>
-          <%= f.label :details, 'Value' %>
-        </div>
-      </div>
-      <% JSON.parse(@product.details).each do |key, value| %>
-        <%= render partial: "details", locals: { k: key, v: value } %>
-      <% end %>
-    </div>
-  <% end %>
+
+  <!-- TODO:  Replace with simple form/cocoon using association -->
+  <h2>Add details</h2>
+  <div id='details_area'>
+    <%= link_to_add_association 'add details', f, :properties, {'data-association-insertion-traversal' => '#details_area', "data-association-insertion-method" => 'append'} %>
+    <%= f.simple_fields_for :properties do |pp| %>
+      <%= render 'property_fields', f: pp %>
+    <% end %>
+  </div>
   
   <div class="actions">
     <%= f.submit class: 'button-primary' %>

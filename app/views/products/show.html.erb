@@ -23,8 +23,8 @@
 <p>
   <strong>Details:</strong>
   <ul>
-    <% JSON.parse(@product.details).each do |k, v| %>
-      <li> <%= "#{k}: #{v}" %> </li>
+    <% @product.properties.each do |record| %>
+      <li> <%= "#{record.name}: #{record.value}" %> </li>
     <% end %>
   </ul>
 </p>

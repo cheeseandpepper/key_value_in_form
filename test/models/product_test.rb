@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
-  test ".known_keys" do
-    assert 4, Product.known_keys.count
+  test "#unique_keys" do
+    product             = Product.first
+    product.properties << [ Property.first, Property.last ]
+    
+    assert 2, product.unique_keys.count
   end
 end

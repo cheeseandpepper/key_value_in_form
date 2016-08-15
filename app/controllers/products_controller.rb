@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :remove_details, :add_details]
+  before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products
   # GET /products.json
@@ -41,16 +41,6 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
-      new_details = {}
-      
-      if params[:details]
-        params[:details].values.each_slice(2) do |key, value| 
-          new_details[key] = value
-        end
-      end      
-      
-      @product.details = new_details.to_json
-      
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
@@ -58,21 +48,6 @@ class ProductsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def add_details
-    respond_to do |format|
-      @key   = ''
-      @value = ''
-      
-      format.js
-    end
-  end
-
-  def remove_details
-    respond_to do |format|
-      format.js
     end
   end
 
@@ -90,15 +65,11 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product    = Product.find(params[:id])
-      @known_keys = Product.known_keys
-    end
-
-    def set_keys
-      @keys = params[:details]
+      @known_keys = @product.unique_keys
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:sku, :name, :description, :price, :details)
+      params.require(:product).permit(:sku, :name, :description, :price, properties_attributes: [:id, :_destroy, :name, :value])
     end
 end

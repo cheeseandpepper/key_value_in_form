@@ -54,7 +54,7 @@ feature "Product" do
   def add_k_v_pairs(kv_hash)
     click_on('Edit')
     
-    kv_hash[:keys].count.times { click_on('Add Details') }
+    kv_hash[:keys].count.times { click_on('add details') }
     
     inputs = page.find_by_id('details_area').all('input')
     inputs.each_slice(2).with_index do |(key, value), index|
