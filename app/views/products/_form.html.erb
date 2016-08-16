@@ -42,6 +42,10 @@
   <h2>Add details</h2>
   <div id='details_area'>
     <%= link_to_add_association 'add details', f, :properties, {'data-association-insertion-traversal' => '#details_area', "data-association-insertion-method" => 'append'} %>
+    <div class='row'>
+      <div class='three columns'><h5>Key</h5></div>
+      <div class='three columns'><h5>Value</h5></div>
+    </div>
     <%= f.simple_fields_for :properties do |pp| %>
       <%= render 'property_fields', f: pp %>
     <% end %>
